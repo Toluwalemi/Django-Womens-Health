@@ -25,3 +25,12 @@ def calculate_no_of_days(start_date, end_date):
     result = end_date_time_obj - start_date_time_obj
 
     return result.days
+
+
+def response_helper(serializer):
+    serialized_data = fetch_serialized_data(serializer)
+    get_difference = calculate_no_of_days(serialized_data["start_date"], serialized_data["end_date"])
+    total_created_cycles = calculate_total_created_cycle(serialized_data["cycle_average"], get_difference)
+    serializer.save()
+
+    return total_created_cycles
