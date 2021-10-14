@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import PeriodCycleList, ping
+from .views import PeriodCycleView, ping
 
 urlpatterns = [
     path('ping/', ping, name="ping"),
-    path('create-cycle/', PeriodCycleList.as_view()),
+    path('create-cycle/', PeriodCycleView.as_view()),
 ]

@@ -12,8 +12,8 @@ def ping(request):
     return JsonResponse(data)
 
 
-class PeriodCycleList(APIView):
-    def post(self, request, format=None):
+class PeriodCycleView(APIView):
+    def post(self, request):
         serializer = PeriodCycleSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
