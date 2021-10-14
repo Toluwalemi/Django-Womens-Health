@@ -1,11 +1,10 @@
 # Create your views here.
 from django.http import JsonResponse
-from rest_framework import generics
 from rest_framework import status
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from api.helpers import fetch_serialized_data, calculate_no_of_days, calculate_total_created_cycle, response_helper
+from api.helpers import response_helper
 from api.models import PeriodCycle
 from api.serializers import PeriodCycleSerializer
 
@@ -15,8 +14,11 @@ def ping(request):
     return JsonResponse(data)
 
 
-class PeriodCycleView(APIView):
-    def post(self, request):
+class PeriodCycleListView(ListCreateAPIView):
+    queryset = PeriodCycle.objects.all()
+    serializer_class = PeriodCycleSerializer
+
+    def post(self, request, *args, **kwargs):
         serializer = PeriodCycleSerializer(data=request.data)
         if serializer.is_valid():
             total_created_cycles = response_helper(serializer)
@@ -25,7 +27,7 @@ class PeriodCycleView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class PeriodCycleDetail(generics.RetrieveUpdateDestroyAPIView):
+class PeriodCycleDetail(RetrieveUpdateDestroyAPIView):
     queryset = PeriodCycle.objects.all()
     serializer_class = PeriodCycleSerializer
 
