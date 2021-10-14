@@ -17,6 +17,3 @@ class PeriodCycle(models.Model):
 
     class Meta:
         verbose_name_plural = "Period Cycles"
-
-    def calculate_total_created_cycle(self):
-        pass
