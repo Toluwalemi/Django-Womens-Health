@@ -1,10 +1,12 @@
 # Create your views here.
+
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from api.helpers import response_helper
+from api.helpers import response_helper, fetch_serialized_data, helper_cycle_event
 from api.models import PeriodCycle
 from api.serializers import PeriodCycleSerializer
 
@@ -14,7 +16,7 @@ def ping(request):
     return JsonResponse(data)
 
 
-class PeriodCycleListView(ListCreateAPIView):
+class PeriodCycleList(ListCreateAPIView):
     queryset = PeriodCycle.objects.all()
     serializer_class = PeriodCycleSerializer
 
@@ -43,3 +45,21 @@ class PeriodCycleDetail(RetrieveUpdateDestroyAPIView):
             )
 
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CycleEventView(APIView):
+    """
+    Method to determine what event is happening with respect to requirement 1
+    """
+
+    def get(self, request):
+        date = request.GET.get('date')
+        queryset = PeriodCycle.objects.get(id=31)
+        serializer = PeriodCycleSerializer(queryset)
+        queryset_params = fetch_serialized_data(serializer)
+
+        if date:
+            resp = helper_cycle_event(queryset_params, date)
+            return Response(resp)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
