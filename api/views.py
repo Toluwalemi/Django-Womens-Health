@@ -57,7 +57,6 @@ class CycleEventView(APIView):
     """
     Method to determine what event is happening with respect to requirement 1
     """
-
     def get(self, request):
         date = request.GET.get('date')
         try:
