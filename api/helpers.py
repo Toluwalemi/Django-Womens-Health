@@ -107,7 +107,6 @@ def helper_cycle_event(queryset_params, date) -> dict:
     Helper function to get the cycle event
     """
     date_format = "%Y-%m-%d"
-    date_format_full = "%Y-%m-%d %H:%M:%S"
     no_of_days = calculate_no_of_days(queryset_params["start_date"].value,
                                       queryset_params["end_date"].value)
     cycle_lst = [
