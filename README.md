@@ -26,14 +26,17 @@ A brief overview of project structure
 │   │── settings.py
 │   │── urls.py
 ├── api
+│   ├── helpers
 │   ├── tests
 │   │   ├── test_foo.py
 │   │   ├── api
 │   │       ├── test_period_cycle_view.py
+│   │       ├── test_cycle_events_view.py
 │   ├── helpers.py
 │   ├── models.py
 │   ├── views.py
 │   ├── urls.py
+│   ├── serializers.py
 ├── .README.md
 ├── .requirements.txt
 ```
@@ -43,7 +46,7 @@ A brief overview of project structure
 * Clone the repository
 * Create a virtual environment in the folder. (If you are on linux, use the command below):
 ```bash
- python3.9 -m venv .venv
+ python3.9 -m venv venv
 ```
 * Activate the virtual environment (If you are on linux, use the command below):
 ```bash
