@@ -5,10 +5,11 @@ determine what period of a monthly cycle the lady is currently in.
 
 ## RESTFUL ROUTES
 ```text
-|Endpoint               |HTTP Method   |CRUDMethod   |Result   |
-|-----------------------|--------------|-------------|---------|
-|api/create-cycle       |    POST      |     CREATE  | add period cycle data
-|api/create-cycle/:id   |    PUT       |     UPDATE  | update data
+|Endpoint                   |HTTP Method   |CRUDMethod   |Result   |
+|---------------------------|--------------|-------------|---------|
+|api/create-cycle           |    POST      |     CREATE  | add period cycle data
+|api/create-cycle/:id       |    PUT       |     UPDATE  | update data
+|api/cycle-event/?date=date |    GET       |     READ    | get cycle event
 ```
 ## Requirements
 ```text
