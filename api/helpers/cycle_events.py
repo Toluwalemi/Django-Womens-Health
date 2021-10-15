@@ -94,16 +94,13 @@ def helper_cycle_event(queryset_params: dict, date) -> dict:
         for day in range(1, no_of_days + 1)
         if day % queryset_params["cycle_average"].value == 0
     ]
-    last_period_date = queryset_params["last_period_date"].value
-    cycle_average = queryset_params["cycle_average"].value
-    period_average = queryset_params["period_average"].value
-    new_cycle_average = math.floor(cycle_average / 2)
-    strp_lpd = datetime.strptime(str(last_period_date), date_format)
+    new_cycle_average = math.floor(queryset_params["cycle_average"].value / 2)
+    strp_lpd = datetime.strptime(str(queryset_params["last_period_date"].value), date_format)
 
     # get period start date
     period_start_date_lst = get_period_start_date_lst(strp_lpd, cycle_lst)
     # get period end date
-    period_end_date_lst = get_period_end_date(period_start_date_lst, period_average)
+    period_end_date_lst = get_period_end_date(period_start_date_lst, queryset_params["period_average"].value)
     # get ovulation dates
     ovulation_date_lst = get_ovulation_dates(period_start_date_lst, new_cycle_average)
     # get fertility window
