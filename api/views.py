@@ -12,11 +12,15 @@ from api.serializers import PeriodCycleSerializer
 
 
 def ping(request):
+    """Health Check"""
     data = {"ping": "pong!"}
     return JsonResponse(data)
 
 
 class PeriodCycleList(ListCreateAPIView):
+    """
+    List View to create a period cycle
+    """
     queryset = PeriodCycle.objects.all()
     serializer_class = PeriodCycleSerializer
 
@@ -30,6 +34,9 @@ class PeriodCycleList(ListCreateAPIView):
 
 
 class PeriodCycleDetail(RetrieveUpdateDestroyAPIView):
+    """
+    Detail View to update view
+    """
     queryset = PeriodCycle.objects.all()
     serializer_class = PeriodCycleSerializer
 
