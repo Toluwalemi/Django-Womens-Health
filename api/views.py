@@ -71,4 +71,4 @@ class CycleEventView(APIView):
             resp: dict = helper_cycle_event(queryset_params, date)
             return Response(resp)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({}, status=status.HTTP_400_BAD_REQUEST)
