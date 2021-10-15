@@ -15,7 +15,10 @@ def fetch_serialized_data(queryset) -> dict:
             'cycle_average': queryset['cycle_average']}
 
 
-def get_period_start_date_lst(strp_lpd, cycle_lst):
+def get_period_start_date_lst(strp_lpd: datetime, cycle_lst: list) -> list:
+    """
+    Helper function to get the period start date
+    """
     date_format_full = "%Y-%m-%d %H:%M:%S"
     period_start_date_lst = []
     for i in cycle_lst:
@@ -23,10 +26,14 @@ def get_period_start_date_lst(strp_lpd, cycle_lst):
         dates_strp = datetime.strptime(str(add_date), date_format_full)
         dates_strf = dates_strp.strftime("%Y-%m-%d")
         period_start_date_lst.append(dates_strf)
+
     return period_start_date_lst
 
 
-def get_period_end_date(period_start_date_lst, period_average):
+def get_period_end_date(period_start_date_lst: list, period_average: int) -> list:
+    """
+    Helper function to get the period end date
+    """
     date_format = "%Y-%m-%d"
     date_format_full = "%Y-%m-%d %H:%M:%S"
     period_end_date_lst = []
@@ -40,7 +47,10 @@ def get_period_end_date(period_start_date_lst, period_average):
     return period_end_date_lst
 
 
-def get_ovulation_dates(period_start_date_lst, new_cycle_average):
+def get_ovulation_dates(period_start_date_lst: list, new_cycle_average: int) -> list:
+    """
+    Helper function to get the list of ovulation dates
+    """
     date_format = "%Y-%m-%d"
     date_format_full = "%Y-%m-%d %H:%M:%S"
     ovulation_date_lst = []
@@ -54,7 +64,7 @@ def get_ovulation_dates(period_start_date_lst, new_cycle_average):
     return ovulation_date_lst
 
 
-def get_fertility_dates(ovulation_date_lst):
+def get_fertility_dates(ovulation_date_lst: list) -> list:
     date_format = "%Y-%m-%d"
     date_format_full = "%Y-%m-%d %H:%M:%S"
     fertility_window_lst = []
@@ -68,12 +78,13 @@ def get_fertility_dates(ovulation_date_lst):
         fert_sub_strf = fert_sub_strp.strftime("%Y-%m-%d")
         fertility_window_lst.append(fert_add_strf)
         fertility_window_lst.append(fert_sub_strf)
+
     return fertility_window_lst
 
 
-def helper_cycle_event(queryset_params, date) -> dict:
+def helper_cycle_event(queryset_params: dict, date) -> dict:
     """
-    Helper function to get the cycle event
+    Helper function to get the cycle event response
     """
     date_format = "%Y-%m-%d"
     no_of_days = calculate_no_of_days(queryset_params["start_date"].value,
@@ -97,7 +108,6 @@ def helper_cycle_event(queryset_params, date) -> dict:
     ovulation_date_lst = get_ovulation_dates(period_start_date_lst, new_cycle_average)
     # get fertility window
     fertility_window_lst = get_fertility_dates(ovulation_date_lst)
-    # get pre-ovulation window
 
     answer_dict = {}
     if date in period_start_date_lst:
