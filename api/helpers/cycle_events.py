@@ -40,14 +40,6 @@ def get_period_end_date(period_start_date_lst, period_average):
     return period_end_date_lst
 
 
-def get_pre_ovulation_window():
-    pass
-
-
-def get_post_ovulation_window():
-    pass
-
-
 def get_ovulation_dates(period_start_date_lst, new_cycle_average):
     date_format = "%Y-%m-%d"
     date_format_full = "%Y-%m-%d %H:%M:%S"
@@ -105,6 +97,7 @@ def helper_cycle_event(queryset_params, date) -> dict:
     ovulation_date_lst = get_ovulation_dates(period_start_date_lst, new_cycle_average)
     # get fertility window
     fertility_window_lst = get_fertility_dates(ovulation_date_lst)
+    # get pre-ovulation window
 
     answer_dict = {}
     if date in period_start_date_lst:
