@@ -69,4 +69,4 @@ class CycleEventView(APIView):
         if date:
             return Response(helper_cycle_event(queryset_params, date))
 
-        return Response({}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"msg": "Please add a date to your path"}, status=status.HTTP_400_BAD_REQUEST)
