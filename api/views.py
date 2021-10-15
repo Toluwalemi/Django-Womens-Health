@@ -47,8 +47,7 @@ class PeriodCycleDetail(RetrieveUpdateDestroyAPIView):
         if serializer_class.is_valid():
             total_created_cycles = response_helper(serializer_class)
             return Response({"data": serializer_class.data,
-                             "total_created_cycles": total_created_cycles}
-                            )
+                             "total_created_cycles": total_created_cycles})
 
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -57,6 +56,7 @@ class CycleEventView(APIView):
     """
     Method to determine what event is happening with respect to requirement 1
     """
+
     def get(self, request):
         date = request.GET.get('date')
         try:
