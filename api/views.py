@@ -59,7 +59,7 @@ class CycleEventView(APIView):
 
     def get(self, request):
         date = request.GET.get('date')
-        queryset = PeriodCycle.objects.get(id=31)
+        queryset = PeriodCycle.objects.get(id=1)
         serializer = PeriodCycleSerializer(queryset)
         queryset_params = fetch_serialized_data(serializer)
 

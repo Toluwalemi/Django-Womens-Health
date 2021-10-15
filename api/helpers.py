@@ -74,6 +74,8 @@ def helper_cycle_event(queryset_params, date) -> dict:
         if day % queryset_params["cycle_average"].value == 0
     ]
     last_period_date = queryset_params["last_period_date"].value
+    cycle_average = queryset_params["cycle_average"].value
+    new_cycle_average = math.floor(cycle_average / 2)
 
     strp_lpd = datetime.strptime(str(last_period_date), date_format)
     period_start_date_lst = []
@@ -83,9 +85,37 @@ def helper_cycle_event(queryset_params, date) -> dict:
         dates_strf = dates_strp.strftime("%Y-%m-%d")
         period_start_date_lst.append(dates_strf)
 
+    # get ovulation dates
+    ovulation_date_lst = []
+    for i in period_start_date_lst:
+        get_date = datetime.strptime(str(i), date_format)
+        add_date = str(get_date + timedelta(days=new_cycle_average))
+        ovu_strp = datetime.strptime(str(add_date), date_format_full)
+        ovu_strf = ovu_strp.strftime("%Y-%m-%d")
+        ovulation_date_lst.append(ovu_strf)
+
+    # get fertility window
+    fertility_window_lst = []
+    for ovu in ovulation_date_lst:
+        get_date = datetime.strptime(str(ovu), date_format)
+        add_to = str(get_date + timedelta(days=4))
+        sub_from = str(get_date - timedelta(days=4))
+        fert_add_strp = datetime.strptime(str(add_to), date_format_full)
+        fert_add_strf = fert_add_strp.strftime("%Y-%m-%d")
+        fert_sub_strp = datetime.strptime(str(sub_from), date_format_full)
+        fert_sub_strf = fert_sub_strp.strftime("%Y-%m-%d")
+        fertility_window_lst.append(fert_add_strf)
+        fertility_window_lst.append(fert_sub_strf)
+
     answer_dict = {}
     if date in period_start_date_lst:
         answer_dict['event'] = "period_start_date"
+        answer_dict["date"] = date
+    elif date in ovulation_date_lst:
+        answer_dict['event'] = "ovulation-date"
+        answer_dict["date"] = date
+    elif date in fertility_window_lst:
+        answer_dict['event'] = "fertility_window"
         answer_dict["date"] = date
 
     return answer_dict
