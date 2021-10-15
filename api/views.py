@@ -66,9 +66,7 @@ class CycleEventView(APIView):
             return Response({"msg": "Object not found"}, status=status.HTTP_400_BAD_REQUEST)
         serializer = PeriodCycleSerializer(queryset)
         queryset_params: dict = fetch_serialized_data(serializer)
-
         if date:
-            resp: dict = helper_cycle_event(queryset_params, date)
-            return Response(resp)
+            return Response(helper_cycle_event(queryset_params, date))
 
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
