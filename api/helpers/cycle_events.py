@@ -110,7 +110,7 @@ def helper_cycle_event(queryset_params: dict, date) -> dict:
     if date in period_start_date_lst:
         answer_dict['event'] = "period_start_date"
         answer_dict["date"] = date
-    if date in period_end_date_lst:
+    elif date in period_end_date_lst:
         answer_dict['event'] = "period_end_date"
         answer_dict["date"] = date
     elif date in ovulation_date_lst:
