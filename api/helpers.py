@@ -1,5 +1,5 @@
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def calculate_total_created_cycle(cycle_average: int, no_of_days: int) -> int:
@@ -58,3 +58,34 @@ def fetch_serialized_data(queryset) -> dict:
             'end_date': queryset['end_date'],
             'period_average': queryset['period_average'],
             'cycle_average': queryset['cycle_average']}
+
+
+def helper_cycle_event(queryset_params, date) -> dict:
+    """
+    Helper function to get the cycle event
+    """
+    date_format = "%Y-%m-%d"
+    date_format_full = "%Y-%m-%d %H:%M:%S"
+    no_of_days = calculate_no_of_days(queryset_params["start_date"].value,
+                                      queryset_params["end_date"].value)
+    cycle_lst = [
+        day
+        for day in range(1, no_of_days + 1)
+        if day % queryset_params["cycle_average"].value == 0
+    ]
+    last_period_date = queryset_params["last_period_date"].value
+
+    strp_lpd = datetime.strptime(str(last_period_date), date_format)
+    period_start_date_lst = []
+    for i in cycle_lst:
+        add_date = str(strp_lpd + timedelta(days=i))
+        dates_strp = datetime.strptime(str(add_date), date_format_full)
+        dates_strf = dates_strp.strftime("%Y-%m-%d")
+        period_start_date_lst.append(dates_strf)
+
+    answer_dict = {}
+    if date in period_start_date_lst:
+        answer_dict['event'] = "period_start_date"
+        answer_dict["date"] = date
+
+    return answer_dict
