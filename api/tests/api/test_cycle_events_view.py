@@ -13,6 +13,7 @@ def test_cycle_event_with_no_date(client, add_period_data):
     )
     resp = client.get('/womens-health/api/cycle-event/')
     assert resp.status_code == 400
+    assert resp.data["msg"] == "Please add a date to your path"
 
 
 @pytest.mark.django_db
