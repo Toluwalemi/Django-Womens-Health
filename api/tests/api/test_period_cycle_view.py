@@ -115,6 +115,7 @@ def test_update_period_cycle(client, add_period_data):
 
 @pytest.mark.django_db
 def test_update_period_cycle_invalid_json(client, add_period_data):
+    """Test to return 404 for an invalid json"""
     period_cycle = add_period_data(
         last_period_date="2020-06-20",
         cycle_average=25,
@@ -122,12 +123,13 @@ def test_update_period_cycle_invalid_json(client, add_period_data):
         start_date="2020-07-25",
         end_date="2021-07-25"
     )
-    resp = client.put(f"/api/movies/{period_cycle.id}/", {}, content_type="application/json")
-    assert resp.status_code == 404
+    resp = client.put(f"/womens-health/api/create-cycle/{period_cycle.id}/", {}, content_type="application/json")
+    assert resp.status_code == 400
 
 
 @pytest.mark.django_db
 def test_update_period_cycle_invalid_json_keys(client, add_period_data):
+    """Test to return 400 in the full data is not provided"""
     period_cycle = add_period_data(
         last_period_date="2020-06-20",
         cycle_average=25,
