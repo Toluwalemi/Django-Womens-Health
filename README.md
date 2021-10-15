@@ -66,10 +66,6 @@ A brief overview of project structure
 ```
  pytest
 ```
-* Run the test coverage
-```
- coverage
-```
 * Run the DJANGO's server and access the endpoints
 ```
  python manage.py runserver

@@ -38,11 +38,9 @@ class PeriodCycleDetail(RetrieveUpdateDestroyAPIView):
         serializer_class = PeriodCycleSerializer(instance, data=request.data)
         if serializer_class.is_valid():
             total_created_cycles = response_helper(serializer_class)
-            return Response(
-                {"data": serializer_class.data,
-                 "total_created_cycles": total_created_cycles
-                 }, status=status.HTTP_200_OK
-            )
+            return Response({"data": serializer_class.data,
+                             "total_created_cycles": total_created_cycles}
+                            )
 
         return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
